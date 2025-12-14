@@ -3,22 +3,74 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useAuthStore } from "@/lib/auth-store";
 
 const SignIn = () => {
+  const router = useRouter();
+  const setAuth = useAuthStore((state) => state.setAuth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle signin logic here
-    console.log("Signin with:", { email, password, rememberMe });
+    setIsLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await fetch(
+        "https://kentecode-api.vercel.app/v1/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Login failed");
+      }
+
+      // Store auth data in Zustand store (automatically persists to localStorage)
+      setAuth({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        user_id: data.user_id,
+        email: data.email,
+      });
+
+      setSuccess(`Login successful! Welcome back, ${data.email}`);
+      console.log("Login successful:", data);
+
+      // Redirect to home page after successful login
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
+    } catch (err: any) {
+      setError(err.message || "An error occurred during login");
+      console.error("Login error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,6 +108,18 @@ const SignIn = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md text-sm">
+                {success}
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label
                 htmlFor="email"
@@ -161,8 +225,9 @@ const SignIn = () => {
             <Button
               type="submit"
               className="w-full h-11 bg-purple-600 hover:bg-purple-700 text-white font-medium"
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
 
