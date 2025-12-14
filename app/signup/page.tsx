@@ -48,9 +48,9 @@ const SignUp = () => {
           <div className="mb-8">
             <div className="text-purple-600 text-3xl mb-4">✱</div>
             <h2 className="text-3xl font-bold mb-2">Create an account</h2>
-            <p className="text-gray-500 text-sm">
-              Access your tasks, notes, and projects anytime, anywhere - and
-              keep everything flowing in one place.
+            <p className="text-gray-500 dark:text-muted-foreground text-sm">
+              Access your programs, courses, and materials anytime, anywhere -
+              and keep everything flowing in one place.
             </p>
           </div>
 
@@ -68,7 +68,7 @@ const SignUp = () => {
                 placeholder="karashaeloi19@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-11"
+                className="rounded-lg h-10"
                 required
               />
             </div>
@@ -87,7 +87,7 @@ const SignUp = () => {
                   placeholder="••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 pr-10"
+                  className="rounded-lg h-10 pr-10"
                   required
                 />
                 <button
@@ -137,13 +137,13 @@ const SignUp = () => {
 
             <Button
               type="submit"
-              className="w-full h-11 bg-purple-600 hover:bg-purple-700 text-white font-medium"
+              className="w-full h-11 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-medium"
             >
               Get Started
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-gray-600">
+          <p className="mt-8 text-center text-sm text-gray-600 dark:text-muted-foreground">
             Don't have an account?{" "}
             <Link
               href="/signin"
