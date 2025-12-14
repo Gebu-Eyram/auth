@@ -27,7 +27,7 @@ export default function Home() {
           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
             This is the home page for the auth example app.
           </h1>
-          
+
           {isAuthenticated ? (
             <div className="flex flex-col gap-4 max-w-md">
               <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
@@ -41,10 +41,11 @@ export default function Home() {
                   <strong>User ID:</strong> {user?.userId}
                 </p>
                 <p className="text-sm text-green-700 dark:text-green-300 break-all">
-                  <strong>Access Token:</strong> {accessToken?.substring(0, 30)}...
+                  <strong>Access Token:</strong> {accessToken?.substring(0, 30)}
+                  ...
                 </p>
               </div>
-              <Button 
+              <Button
                 onClick={handleLogout}
                 variant="destructive"
                 className="w-full"
