@@ -26,7 +26,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace('/');
+      router.replace("/");
     }
   }, [isAuthenticated, router]);
 
