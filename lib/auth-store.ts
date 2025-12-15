@@ -11,6 +11,7 @@ interface AuthState {
   refreshToken: string | null;
   user: AuthUser | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
 
   // Actions
   setAuth: (data: {
@@ -21,6 +22,7 @@ interface AuthState {
   }) => void;
   logout: () => void;
   updateAccessToken: (token: string) => void;
+  setLoading: (loading: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -30,6 +32,7 @@ export const useAuthStore = create<AuthState>()(
       refreshToken: null,
       user: null,
       isAuthenticated: false,
+      isLoading: true,
 
       setAuth: (data) =>
         set({
@@ -54,9 +57,18 @@ export const useAuthStore = create<AuthState>()(
         set({
           accessToken: token,
         }),
+
+      setLoading: (loading) =>
+        set({
+          isLoading: loading,
+        }),
     }),
     {
       name: "auth-storage", // localStorage key
+      onRehydrateStorage: () => (state) => {
+        // Set loading to false after rehydration is complete
+        state?.setLoading(false);
+      },
     }
   )
 );
