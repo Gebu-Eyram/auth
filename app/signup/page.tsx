@@ -297,12 +297,12 @@ const SignUp = () => {
           )}
 
           <p className="mt-8 text-center text-sm text-gray-600 dark:text-muted-foreground">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
               href="/signin"
               className="text-purple-600 hover:text-purple-700 font-medium"
             >
-              Sign up
+              Sign In
             </Link>
           </p>
         </div>
