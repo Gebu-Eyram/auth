@@ -19,7 +19,6 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -210,20 +209,6 @@ const SignIn = () => {
                   )}
                 </button>
               </div>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="remember"
-                checked={rememberMe}
-                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-              />
-              <label
-                htmlFor="remember"
-                className="text-sm text-gray-600 cursor-pointer"
-              >
-                Remember me
-              </label>
             </div>
 
             <Button
