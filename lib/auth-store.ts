@@ -6,10 +6,39 @@ interface AuthUser {
   email: string;
 }
 
+interface UserProfile {
+  id: string;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  middle_name?: string;
+  country_id?: string;
+  country?: string;
+  ethnicity?: string;
+  experience_level?: string;
+  phone_number?: string;
+  role?: string;
+  account_status?: string;
+  registration_date?: string;
+  created_at?: string;
+  updated_at?: string;
+  last_login?: string;
+  referred_by_code?: string;
+  referral_code?: string;
+  registration_ip?: string;
+  registration_user_agent?: string;
+  registration_device_type?: string;
+  registration_browser?: string;
+  registration_os?: string;
+  last_login_ip?: string;
+  last_login_user_agent?: string;
+}
+
 interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   user: AuthUser | null;
+  profile: UserProfile | null;
   isAuthenticated: boolean;
   isLoading: boolean;
 
@@ -20,6 +49,7 @@ interface AuthState {
     user_id: string;
     email: string;
   }) => void;
+  setProfile: (profile: UserProfile) => void;
   logout: () => void;
   updateAccessToken: (token: string) => void;
   setLoading: (loading: boolean) => void;
@@ -31,6 +61,7 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       user: null,
+      profile: null,
       isAuthenticated: false,
       isLoading: true,
 
@@ -45,11 +76,17 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: true,
         }),
 
+      setProfile: (profile) =>
+        set({
+          profile,
+        }),
+
       logout: () =>
         set({
           accessToken: null,
           refreshToken: null,
           user: null,
+          profile: null,
           isAuthenticated: false,
         }),
 

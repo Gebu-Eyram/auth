@@ -235,7 +235,7 @@ const SignIn = () => {
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-gray-600 text-muted-foreground">
+          <p className="mt-8 text-center text-sm text-gray-600 dark:text-muted-foreground">
             Don't have an account?{" "}
             <Link
               href="/signup"
